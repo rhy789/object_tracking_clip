@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Model files (큰 파일들)
+*.pt
+*.pth
+*.weights
+*.onnx
+*.pb
+
+# Data files
+data/*.mp4
+data/*.avi
+data/*.mov
+
+# Results
+results/
+runs/
+
+# Dataset
+datasets/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# YOLO specific (불필요한 큰 파일들)
+yolov5/runs/
+yolov5/*.pt
+yolov5/__pycache__/
+
+# CLIP models cache
+models/
+
+# Specific files
+yolov5s.pt
+진행사항.odt
+matter/
+

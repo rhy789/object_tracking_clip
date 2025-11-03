@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Results and outputs
+results/*.mp4
+results/*.avi
+*.weights
+*.pt
+*.pth
+*.onnx
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+Dockerfile.old
+docker-compose.old.yml
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large model files (download separately)
+*.bin
+*.h5
+models/
+

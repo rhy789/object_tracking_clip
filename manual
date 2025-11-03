@@ -1,0 +1,58 @@
+# 도커 컨테이너 시작
+docker start tracking_system
+
+# 도커 컨테이너에 접속
+docker exec -it tracking_system bash
+
+# 컨테이너 내부에서 작업 디렉토리로 이동
+cd /workspace
+
+# YOLOv5 폴더로 이동
+cd yolov5
+
+# 1단계 테스트: 사람 필터링
+python detect.py --source /workspace/data/people.mp4 --save-txt --project /workspace/results --name person_filter_test
+
+# 2단계 테스트: CLIP 임베딩 추출 (영상)
+python detect.py --test-clip-video
+
+# 2단계 검증: 저장된 임베딩 로드 테스트
+python detect.py --test-load-embeddings
+
+# 컨테이너 종료 (필요시)
+exit
+
+# ========== 3단계: DeepSORT + CLIP 트래킹 테스트 ==========
+# 도커에서 실행:
+python3 test_deepsort_clip.py
+
+# 또는 직접 실행:
+cd /workspace
+python3 test_deepsort_clip.py
+
+# 기본 실행
+python3 integrated_tracking.py --source /workspace/data/people.mp4
+
+# 파라미터 조정
+python3 integrated_tracking.py \
+    --source /workspace/data/people.mp4 \
+    --conf-thres 0.5 \
+    --iou-thres 0.5 \
+    --max-clip-distance 0.6
+
+# 결과 저장 위치 지정
+python3 integrated_tracking.py \
+    --source /workspace/data/people.mp4 \
+    --save-dir results/my_tracking
+
+# ========== 성능 비교 (Before/After) ==========
+# 상세 성능 비교 (실제 측정)
+python3 performance_comparison.py --source /workspace/data/people.mp4
+
+# 간단한 성능 비교 (시뮬레이션)
+python3 simple_comparison.py
+
+# 성능 비교 결과 저장 위치 지정
+python3 performance_comparison.py \
+    --source /workspace/data/people.mp4 \
+    --save-results results/performance_analysis.json

@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  yolo-deepsort-clip:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: yolo-deepsort-clip:latest
+    container_name: tracking_system
+
+    # GPU support
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    # Environment variables
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - CUDA_VISIBLE_DEVICES=0
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+
+    # Volume mounts for real-time code changes
+    volumes:
+      - .:/workspace
+      - ./data:/workspace/data
+      - ./results:/workspace/results
+      - ./models:/workspace/models
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    # Keep container running
+    stdin_open: true
+    tty: true
+
+    # Network mode
+    network_mode: host
+
+    # Shared memory size for data loading
+    shm_size: '8gb'
+
+    # Working directory
+    working_dir: /workspace
